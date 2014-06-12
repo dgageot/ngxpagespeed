@@ -1,7 +1,7 @@
 # Build
 
-docker build -t dgageot/ngx_pagespeed .
+docker build -t dgageot/ngxpagespeed .
 
 # Run
 
-docker run --rm -ti --net host dgageot/ngx_pagespeed
+docker run --rm -ti --net host dgageot/ngxpagespeed
