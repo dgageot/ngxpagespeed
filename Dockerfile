@@ -25,13 +25,12 @@ RUN cd /tmp/nginx-1.4.6 \
 	&& make \
 	&& sudo make install
 
-# Comfigure nginx
-RUN echo "\ndaemon off;" >> /usr/local/nginx/conf/nginx.conf
-
 WORKDIR /usr/local/nginx
 
-ENTRYPOINT ["/usr/local/nginx/sbin/nginx"]
+CMD /usr/local/nginx/sbin/nginx
 
 EXPOSE 80
-EXPOSE 8080
 EXPOSE 443
+
+# Configure nginx
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf
