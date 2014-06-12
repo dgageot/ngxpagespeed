@@ -1,0 +1,18 @@
+server {
+    listen 80;
+
+    location / {
+		#  Ensure requests for pagespeed optimized resources go to the pagespeed
+		#  handler and no extraneous headers get set.
+		location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
+		location ~ "^/pagespeed_static/" { }
+		location ~ "^/ngx_pagespeed_beacon$" { }
+
+        proxy_pass http://127.0.0.1:8080;
+        proxy_read_timeout 600s;
+        proxy_buffering off;
+        proxy_set_header Connection '';
+        proxy_http_version 1.1;
+        chunked_transfer_encoding off;
+    }
+}

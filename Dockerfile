@@ -36,6 +36,8 @@ WORKDIR /usr/local/nginx
 
 CMD /usr/local/nginx/sbin/nginx
 
+VOLUME ["/etc/nginx/sites-enabled"]
+
 EXPOSE 80
 EXPOSE 443
 
