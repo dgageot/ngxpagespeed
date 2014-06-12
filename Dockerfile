@@ -28,6 +28,10 @@ RUN cd /tmp/nginx-1.4.6 \
 	&& make \
 	&& sudo make install
 
+# Cleanup
+RUN rm -Rf /tmp/ngx_pagespeed-1.8.31.2-beta
+RUN rm -Rf /tmp/nginx-1.4.6
+
 WORKDIR /usr/local/nginx
 
 CMD /usr/local/nginx/sbin/nginx
