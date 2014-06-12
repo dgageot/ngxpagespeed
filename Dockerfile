@@ -6,7 +6,8 @@ ENV DEBIAN_FRONTEND noninteractive
 # From instructions here: https://github.com/pagespeed/ngx_pagespeed
 
 # Install dependencies
-RUN sudo apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev
+RUN sudo apt-get update
+RUN sudo apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev libperl-dev
 
 # Download ngx_pagespeed
 RUN cd /tmp \
@@ -24,7 +25,7 @@ RUN cd /tmp \
 	&& tar -xvzf nginx-1.4.6.tar.gz \
 	&& rm nginx-1.4.6.tar.gz
 RUN cd /tmp/nginx-1.4.6 \
-	&& ./configure --add-module=/tmp/ngx_pagespeed-1.8.31.2-beta \
+	&& ./configure --add-module=/tmp/ngx_pagespeed-1.8.31.2-beta --with-http_ssl_module --with-http_spdy_module \
 	&& make \
 	&& sudo make install
 
