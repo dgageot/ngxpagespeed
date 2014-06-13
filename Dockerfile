@@ -11,36 +11,33 @@ RUN sudo apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev o
 
 # Download ngx_pagespeed
 RUN cd /tmp \
-	&& wget --quiet https://github.com/pagespeed/ngx_pagespeed/archive/v1.8.31.2-beta.zip \
-	&& unzip v1.8.31.2-beta.zip \
-	&& rm v1.8.31.2-beta.zip
-RUN cd /tmp/ngx_pagespeed-1.8.31.2-beta/ \
-	&& wget --quiet https://dl.google.com/dl/page-speed/psol/1.8.31.2.tar.gz \
-	&& tar -xzvf 1.8.31.2.tar.gz \
-	&& rm 1.8.31.2.tar.gz
+	&& wget --quiet https://github.com/pagespeed/ngx_pagespeed/archive/v1.8.31.3-beta.zip \
+	&& unzip v1.8.31.3-beta.zip \
+	&& rm v1.8.31.3-beta.zip
+RUN cd /tmp/ngx_pagespeed-1.8.31.3-beta/ \
+	&& wget --quiet https://dl.google.com/dl/page-speed/psol/1.8.31.3.tar.gz \
+	&& tar -xzvf 1.8.31.3.tar.gz \
+	&& rm 1.8.31.3.tar.gz
 
 # Download and build nginx
 RUN cd /tmp \
-	&& wget --quiet http://nginx.org/download/nginx-1.4.6.tar.gz \
-	&& tar -xvzf nginx-1.4.6.tar.gz \
-	&& rm nginx-1.4.6.tar.gz
-RUN cd /tmp/nginx-1.4.6 \
-	&& ./configure --add-module=/tmp/ngx_pagespeed-1.8.31.2-beta --with-http_ssl_module --with-http_spdy_module \
+	&& wget --quiet http://nginx.org/download/nginx-1.7.1.tar.gz \
+	&& tar -xvzf nginx-1.7.1.tar.gz \
+	&& rm nginx-1.7.1.tar.gz
+RUN cd /tmp/nginx-1.7.1 \
+	&& ./configure --add-module=/tmp/ngx_pagespeed-1.8.31.3-beta --with-http_ssl_module --with-http_spdy_module \
 	&& make \
 	&& sudo make install
 
 # Cleanup
-RUN rm -Rf /tmp/ngx_pagespeed-1.8.31.2-beta
-RUN rm -Rf /tmp/nginx-1.4.6
+RUN rm -Rf /tmp/ngx_pagespeed-1.8.31.3-beta
+RUN rm -Rf /tmp/nginx-1.7.1
 
 WORKDIR /usr/local/nginx
-
-CMD /usr/local/nginx/sbin/nginx
-
 VOLUME ["/etc/nginx/sites-enabled"]
-
 EXPOSE 80
 EXPOSE 443
+CMD /usr/local/nginx/sbin/nginx
 
 # Configure nginx
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
