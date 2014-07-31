@@ -28,7 +28,10 @@ EXPOSE 443
 
 VOLUME ["/etc/nginx/sites-enabled"]
 WORKDIR /etc/nginx/
-CMD ["/usr/sbin/nginx"]
+ENTRYPOINT ["/usr/sbin/nginx"]
 
 # Configure nginx
+RUN mkdir /var/ngx_pagespeed_cache
+RUN chmod 777 /var/ngx_pagespeed_cache
 COPY nginx.conf /etc/nginx/conf/nginx.conf
+COPY sites-enabled /etc/nginx/sites-enabled
