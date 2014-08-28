@@ -5,12 +5,14 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # From instructions here: https://github.com/pagespeed/ngx_pagespeed
 
-# Install dependencies
+# Update dependencies
 RUN apt-get update -qq 
-RUN apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev libperl-dev wget zip ca-certificates
 
-# Download ngx_pagespeed, then download and build nginx. Then cleanup
-RUN cd /tmp \
+# Install dependencies
+# Download ngx_pagespeed, then download and build nginx
+# Cleanup
+RUN apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev libperl-dev wget zip ca-certificates \
+	&& cd /tmp \
 	&& (wget -q -O - https://github.com/pagespeed/ngx_pagespeed/archive/v1.8.31.4-beta.tar.gz | tar zxf -) \
 	&& cd /tmp/ngx_pagespeed-1.8.31.4-beta/ \
 	&& (wget -q -O - https://dl.google.com/dl/page-speed/psol/1.8.31.4.tar.gz | tar zxf -) \
@@ -20,7 +22,8 @@ RUN cd /tmp \
 	&& ./configure --prefix=/etc/nginx/ --sbin-path=/usr/sbin/nginx --add-module=/tmp/ngx_pagespeed-1.8.31.4-beta --with-http_ssl_module --with-http_spdy_module \
 	&& make install \
 	&& rm -Rf /tmp/ngx_pagespeed-1.8.31.4-beta \
-	&& rm -Rf /tmp/nginx-1.7.3
+	&& rm -Rf /tmp/nginx-1.7.3 \
+	&& apt-get purge -y wget build-essential && apt-get autoremove -y && apt-get clean
 
 EXPOSE 80 443
 
