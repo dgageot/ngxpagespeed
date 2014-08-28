@@ -22,8 +22,7 @@ RUN cd /tmp \
 	&& rm -Rf /tmp/ngx_pagespeed-1.8.31.4-beta \
 	&& rm -Rf /tmp/nginx-1.7.3
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
 
 VOLUME ["/etc/nginx/sites-enabled"]
 WORKDIR /etc/nginx/
