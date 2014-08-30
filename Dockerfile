@@ -5,25 +5,23 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # From instructions here: https://github.com/pagespeed/ngx_pagespeed
 
-# Update dependencies
-RUN apt-get update -qq 
-
 # Install dependencies
 # Download ngx_pagespeed, then download and build nginx
 # Cleanup
-RUN apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev libperl-dev wget zip ca-certificates \
+RUN apt-get update -qq \
+	&& apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev libperl-dev wget zip ca-certificates \
 	&& cd /tmp \
 	&& (wget -q -O - https://github.com/pagespeed/ngx_pagespeed/archive/v1.8.31.4-beta.tar.gz | tar zxf -) \
 	&& cd /tmp/ngx_pagespeed-1.8.31.4-beta/ \
 	&& (wget -q -O - https://dl.google.com/dl/page-speed/psol/1.8.31.4.tar.gz | tar zxf -) \
 	&& cd /tmp \
-	&& (wget -q -O - http://nginx.org/download/nginx-1.7.3.tar.gz | tar zxf -) \
-	&& cd /tmp/nginx-1.7.3 \
+	&& (wget -q -O - http://nginx.org/download/nginx-1.7.4.tar.gz | tar zxf -) \
+	&& cd /tmp/nginx-1.7.4 \
 	&& ./configure --prefix=/etc/nginx/ --sbin-path=/usr/sbin/nginx --add-module=/tmp/ngx_pagespeed-1.8.31.4-beta --with-http_ssl_module --with-http_spdy_module \
 	&& make install \
-	&& rm -Rf /tmp/ngx_pagespeed-1.8.31.4-beta \
-	&& rm -Rf /tmp/nginx-1.7.3 \
-	&& apt-get purge -y wget zip build-essential && apt-get autoremove -y && apt-get clean
+	&& rm -Rf /tmp/ngx* \
+	&& apt-get purge -y wget zip build-essential && apt-get autoremove -y \
+	&& apt-get clean
 
 EXPOSE 80 443
 
