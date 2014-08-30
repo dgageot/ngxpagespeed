@@ -23,7 +23,7 @@ RUN apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openss
 	&& make install \
 	&& rm -Rf /tmp/ngx_pagespeed-1.8.31.4-beta \
 	&& rm -Rf /tmp/nginx-1.7.3 \
-	&& apt-get purge -y wget build-essential && apt-get autoremove -y && apt-get clean
+	&& apt-get purge -y wget zip build-essential && apt-get autoremove -y && apt-get clean
 
 EXPOSE 80 443
 
