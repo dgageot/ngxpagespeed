@@ -17,7 +17,7 @@ RUN apt-get update -qq \
 	&& (wget -qO - https://dl.google.com/dl/page-speed/psol/1.9.32.3.tar.gz | tar zxf - -C /tmp/ngx_pagespeed-1.9.32.3-beta/) \
 	&& (wget -qO - http://nginx.org/download/nginx-1.7.10.tar.gz | tar zxf - -C /tmp) \
 	&& cd /tmp/nginx-1.7.10 \
-	&& ./configure --prefix=/etc/nginx/ --sbin-path=/usr/sbin/nginx --add-module=/tmp/ngx_pagespeed-1.9.32.3-beta --with-http_ssl_module --with-http_spdy_module \
+	&& ./configure --prefix=/etc/nginx/ --sbin-path=/usr/sbin/nginx --add-module=/tmp/ngx_pagespeed-1.9.32.3-beta --with-http_ssl_module --with-http_spdy_module --with-http_stub_status_module \
 	&& make install \
 	&& rm -Rf /tmp/* \
 	&& apt-get purge -yqq wget build-essential \
