@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Cleanup
 #
 RUN apt-get update -qq \
-	&& apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev libperl-dev wget ca-certificates \
+	&& apt-get install -yqq build-essential zlib1g-dev libpcre3 libpcre3-dev openssl libssl-dev libperl-dev wget ca-certificates logrotate \
 	&& (wget -qO - https://github.com/pagespeed/ngx_pagespeed/archive/v1.9.32.3-beta.tar.gz | tar zxf - -C /tmp) \
 	&& (wget -qO - https://dl.google.com/dl/page-speed/psol/1.9.32.3.tar.gz | tar zxf - -C /tmp/ngx_pagespeed-1.9.32.3-beta/) \
 	&& (wget -qO - http://nginx.org/download/nginx-1.7.11.tar.gz | tar zxf - -C /tmp) \
